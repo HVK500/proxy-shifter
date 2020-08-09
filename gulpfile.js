@@ -5,7 +5,7 @@ const config = helpers.readFile('./config.json', true);
 
 gulp.task('default', () => {
   // Make request for server info
-  axios.get('https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations')
+  axios.get(config.api.url)
     .then((response) => {
       const hostName = response.data[0].hostname;
 

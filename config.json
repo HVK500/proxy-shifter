@@ -1,4 +1,7 @@
 {
+  "api": {
+    "url": "https://api.nordvpn.com/v1/servers/recommendations"
+  },
   "input": {
     "file": "/home/pi/.config/deluge/core.conf"
   },
