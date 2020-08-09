@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const helpers = require('./internals/helpers');
 const config = helpers.readFile('./config.json', true);
 
-gulp.task('default', () => {
+gulp.task('default', (done) => {
   // Make request for server info
   axios.get(config.api.url)
     .then((response) => {
@@ -15,12 +15,9 @@ gulp.task('default', () => {
       // Remove start of file
       const fileObject = JSON.parse(JSON.parse(fileContent.replace('"{\\n\\"file\\":1,\\n\\"format\\":1\\n}{', '"{')));
 
-      let oldHostName = '';
-      // Replace all proxy entries
-      config.targetProxyEntries.forEach((proxyOption) => {
-        oldHostName = fileObject.proxies[proxyOption].hostname;
-        fileObject.proxies[proxyOption].hostname = hostName;
-      });
+      // Replace proxy entrie
+      let previousHost = fileObject.proxy.hostname;
+      fileObject.proxy.hostname = hostName;
 
       // Add back start of file
       let result = JSON.stringify({file: 1, format: 1}, null, 2) + JSON.stringify(fileObject, null, 2);
@@ -30,12 +27,15 @@ gulp.task('default', () => {
         result = result.replace(replace.from, replace.to);
       });
 
-      console.log(`Changed proxy from: "${oldHostName}" = to => "${hostName}"`);
+      console.log(`Changed proxy from: "${previousHost}" = to => "${hostName}"`);
 
       // Save file to disk
-      helpers.writeFile(config.input.file, result.replace(/^\"/, '').replace(/\"$/, ''));
+      //config.input.file
+      helpers.writeFile('./data/core_new.conf', result.replace(/^\"/, '').replace(/\"$/, ''));
+      done();
     })
     .catch((error) => {
       console.error(error);
+      done();
     });
 });

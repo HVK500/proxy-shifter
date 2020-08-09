@@ -3,17 +3,14 @@
     "url": "https://api.nordvpn.com/v1/servers/recommendations"
   },
   "input": {
-    "file": "/home/pi/.config/deluge/core.conf"
+    "file": "./data/_core.conf"
   },
-  "targetProxyEntries": [
-    "peer",
-    "web_seed",
-    "tracker",
-    "dht"
-  ],
   "inconsistencyCorrection": [
     { "from": "\"info_sent\": 0,", "to": "\"info_sent\": 0.0," },
     { "from": "\"max_upload_speed\": -1,", "to": "\"max_upload_speed\": -1.0," },
-    { "from": "\"max_download_speed\": -1,", "to": "\"max_download_speed\": -1.0," }
+    { "from": "\"max_download_speed\": -1,", "to": "\"max_download_speed\": -1.0," },
+    { "from": "\"seed_time_ratio_limit\": 7,", "to": "\"seed_time_ratio_limit\": 7.0," },
+    { "from": "\"share_ratio_limit\": 2,", "to": "\"share_ratio_limit\": 2.0," },
+    { "from": "\"stop_seed_ratio\": 2,", "to": "\"stop_seed_ratio\": 2.0," }
   ]
 }
