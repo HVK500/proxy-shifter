@@ -3,7 +3,7 @@
     "url": "https://api.nordvpn.com/v1/servers/recommendations"
   },
   "input": {
-    "file": "./data/_core.conf"
+    "file": "./data/core.conf"
   },
   "inconsistencyCorrection": [
     { "from": "\"info_sent\": 0,", "to": "\"info_sent\": 0.0," },

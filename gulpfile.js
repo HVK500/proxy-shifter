@@ -3,11 +3,22 @@ const gulp = require('gulp');
 const helpers = require('./internals/helpers');
 const config = helpers.readFile('./config.json', true);
 
+const HTTPS_PROXY_ID = 21;
+const STATE = 'online';
+
 gulp.task('default', (done) => {
   // Make request for server info
   axios.get(config.api.url)
     .then((response) => {
-      const hostName = response.data[0].hostname;
+      let hostName = null;
+      for (const data of response.data) {
+        if (data.status.toLowerCase() === STATE &&
+          data.technologies.filter(x => x.id === HTTPS_PROXY_ID).length === 1) {
+            hostName = data.hostname;
+            console.log(`Selected "${hostName}" with current load of ${data.load}`);
+            break;
+        }
+      }
 
       // Read input file
       const fileContent = JSON.stringify(helpers.readFile(config.input.file)).replace(/\s/g,''); // Remove all whitespace
@@ -30,8 +41,7 @@ gulp.task('default', (done) => {
       console.log(`Changed proxy from: "${previousHost}" = to => "${hostName}"`);
 
       // Save file to disk
-      //config.input.file
-      helpers.writeFile('./data/core_new.conf', result.replace(/^\"/, '').replace(/\"$/, ''));
+      helpers.writeFile(config.input.file, result.replace(/^\"/, '').replace(/\"$/, ''));
       done();
     })
     .catch((error) => {

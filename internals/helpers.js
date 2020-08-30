@@ -4,8 +4,7 @@ const mkdirp = require('mkdirp');
 
 const createPath = (path) => {
   const directory = pathing.dirname(path);
-  // If the directory does not exist, create it
-  mkdirp.sync(directory);
+  fs.mkdirSync(directory, {recursive: true});
   return path;
 };
 
