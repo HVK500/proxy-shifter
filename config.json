@@ -1,6 +1,6 @@
 {
   "api": {
-    "url": "https://api.nordvpn.com/v1/servers/recommendations"
+    "url": "https://api.nordvpn.com/v1/servers/recommendations?filters[servers_technologies][identifier]=socks&limit=1"
   },
   "input": {
     "file": "./data/core.conf"

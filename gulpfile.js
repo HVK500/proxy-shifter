@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const helpers = require('./internals/helpers');
 const config = helpers.readFile('./config.json', true);
 
-const HTTPS_PROXY_ID = 21;
+const PROXY_ID = 7; // SOCKS5
 const STATE = 'online';
 
 gulp.task('default', (done) => {
@@ -13,7 +13,7 @@ gulp.task('default', (done) => {
       let hostName = null;
       for (const data of response.data) {
         if (data.status.toLowerCase() === STATE &&
-          data.technologies.filter(x => x.id === HTTPS_PROXY_ID).length === 1) {
+          data.technologies.filter(x => x.id === PROXY_ID).length === 1) {
             hostName = data.hostname;
             console.log(`Selected "${hostName}" with current load of ${data.load}`);
             break;

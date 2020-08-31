@@ -1,2 +1,2 @@
 #!/bin/sh
-yarn default
+npm run main
